@@ -1,10 +1,9 @@
 const path = require("path");
-
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-
 const errorController = require("./controllers/errorController");
+const mongoConnect = require("./util/database");
 app.set("view engine", "ejs");
 app.set("views", "views");
 
@@ -19,4 +18,7 @@ app.use(shopRoutes);
 
 app.use(errorController.notFoundPage);
 
-app.listen(3000);
+mongoConnect((client) => {
+  console.log(client);
+  app.listen(3000);
+});
